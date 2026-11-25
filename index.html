@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quítale hierro · Dale otra vuelta a lo que te pesa</title>
+<meta name="description" content="Cuenta lo que te ronda la cabeza y recibe una reflexión cercana, al estilo de un buen libro de autoayuda: para entender lo que te pasa, cuestionar tus pensamientos trampa y quitarle hierro. Gratis y sin registro.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Quítale hierro">
+<meta property="og:description" content="¿Le das vueltas a algo? Cuéntalo y dale otra vuelta, con calma.">
+<meta property="og:locale" content="es_ES">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400&family=Nunito+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f7f2ea;--paper:#fffdf9;--ink:#2d2a26;--soft:#6f675e;--line:#e6dccd;--terra:#c8643b;--terra2:#a94f2b;--sage:#7d9a7e;--sage-bg:#eef3ec;--warm:#fbefe6}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Nunito Sans",system-ui,sans-serif;font-size:18px;line-height:1.65;color:var(--ink);background:var(--bg);min-height:100vh}
+body:before{content:"";position:fixed;inset:-20% -10% auto auto;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,#f3d8c2 0%,transparent 65%);opacity:.7;z-index:0;pointer-events:none}
+.wrap{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:20px 20px 60px}
+header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{display:flex;align-items:center;gap:8px;white-space:nowrap;font-family:Fraunces,serif;font-weight:600;font-size:19px;color:var(--ink);text-decoration:none;cursor:pointer}
+.logo svg{width:30px;height:30px}
+.help-link{white-space:nowrap;font-size:13px;color:var(--terra2);font-weight:700;text-decoration:none;border:1px solid #ecc9b5;border-radius:30px;padding:6px 12px;background:var(--paper)}
+h1,h2,h3{font-family:Fraunces,serif;font-weight:600;line-height:1.2}
+.hero{padding:42px 0 20px}
+.hero h1{font-size:clamp(38px,9vw,60px);letter-spacing:-.01em}
+.hero h1 em{font-style:italic;color:var(--terra)}
+.hero p{font-size:20px;color:var(--soft);margin-top:12px;max-width:560px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 10px 30px rgba(120,90,60,.07)}
+label.big{display:block;font-family:Fraunces,serif;font-size:21px;margin-bottom:10px}
+textarea{width:100%;min-height:150px;resize:vertical;border:1px solid var(--line);border-radius:14px;padding:14px 16px;font:inherit;color:var(--ink);background:#fff;outline:none;transition:border .2s}
+textarea:focus{border-color:var(--terra)}
+.count{font-size:13px;color:var(--soft);text-align:right;margin-top:4px}
+.sub{font-size:15px;font-weight:700;color:var(--soft);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.06em}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:30px;padding:6px 13px;font:inherit;font-size:15px;color:var(--ink);cursor:pointer;transition:.2s}
+.chip:hover{border-color:var(--terra)}
+.chip.on{background:var(--terra);border-color:var(--terra);color:#fff}
+.btn{display:inline-flex;align-items:center;gap:8px;border:none;border-radius:40px;background:var(--terra);color:#fff;font:inherit;font-weight:700;font-size:17px;padding:13px 26px;cursor:pointer;transition:.2s;box-shadow:0 6px 18px rgba(200,100,59,.25)}
+.btn:hover{background:var(--terra2)}
+.btn:disabled{opacity:.45;cursor:default}
+.btn.ghost{background:transparent;color:var(--terra2);border:1px solid #ecc9b5;box-shadow:none}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:18px}
+.privacy{font-size:14px;color:var(--soft);display:flex;gap:8px;align-items:flex-start;max-width:420px}
+.examples{margin-top:28px}
+.examples h2{font-size:20px;margin-bottom:10px}
+.ex{display:grid;gap:8px}
+.ex button{text-align:left;border:1px dashed var(--line);background:transparent;border-radius:12px;padding:10px 14px;font:inherit;font-size:16px;color:var(--soft);cursor:pointer}
+.ex button:hover{border-color:var(--terra);color:var(--ink)}
+.how{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px;margin-top:34px}
+.how div{background:var(--sage-bg);border-radius:16px;padding:16px}
+.how b{font-family:Fraunces,serif;font-size:18px;display:block;margin-bottom:4px}
+.how p{font-size:15.5px;color:var(--soft)}
+/* conversación */
+#chat{display:none}
+.you{background:var(--warm);border-radius:18px 18px 4px 18px;padding:14px 18px;margin:22px 0 18px auto;max-width:88%;white-space:pre-wrap;font-size:17px}
+.reply{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:22px 22px 10px;box-shadow:0 10px 30px rgba(120,90,60,.07)}
+.reply h3{font-size:19px;color:var(--terra2);margin:22px 0 6px}
+.reply h3:first-child{margin-top:0}
+.reply p{margin-bottom:12px}
+.reply ul,.reply ol{margin:0 0 12px 22px}
+.reply li{margin-bottom:6px}
+.reply strong{color:var(--terra2)}
+.reply .keep{font-family:Fraunces,serif;font-style:italic;font-size:22px;line-height:1.4;color:var(--ink);background:var(--sage-bg);border-left:4px solid var(--sage);border-radius:10px;padding:14px 18px;margin:6px 0 16px}
+.cursor{display:inline-block;width:8px;height:18px;background:var(--terra);vertical-align:-3px;margin-left:2px;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:0}}
+.thinking{display:flex;align-items:center;gap:12px;color:var(--soft);font-style:italic;padding:6px 0 14px}
+.dots span{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--terra);margin-right:4px;animation:dot 1.2s infinite}
+.dots span:nth-child(2){animation-delay:.2s}.dots span:nth-child(3){animation-delay:.4s}
+@keyframes dot{0%,100%{opacity:.25;transform:translateY(0)}50%{opacity:1;transform:translateY(-4px)}}
+.follow{margin-top:22px}
+.follow textarea{min-height:90px}
+.left{font-size:14px;color:var(--soft)}
+.actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:24px}
+.crisis{background:#fff4ef;border:2px solid var(--terra);border-radius:18px;padding:18px 20px;margin:18px 0}
+.crisis h3{font-size:20px;color:var(--terra2);margin-bottom:6px}
+.crisis ul{list-style:none;margin-top:8px}
+.crisis li{margin:6px 0}
+.crisis a{color:var(--terra2);font-weight:700}
+.tel{font-weight:700;font-size:20px;color:var(--terra2);white-space:nowrap}
+.note{font-size:14.5px;color:var(--soft);text-align:center;margin-top:12px}
+footer{margin-top:50px;border-top:1px solid var(--line);padding-top:20px;font-size:14.5px;color:var(--soft)}
+footer p{margin-bottom:10px}
+footer .phones{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:6px 18px;margin:8px 0 14px}
+footer b{color:var(--ink)}
+.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:9px 18px;border-radius:30px;font-size:15px;display:none;z-index:20}
+.modal{position:fixed;inset:0;background:rgba(45,42,38,.45);display:none;align-items:center;justify-content:center;padding:20px;z-index:30}
+.modal.on{display:flex}
+.mbox{background:var(--paper);border-radius:20px;max-width:520px;width:100%;max-height:88vh;overflow:auto;padding:24px;position:relative}
+.mbox h3{font-size:22px;margin-bottom:10px}
+.mbox p{margin-bottom:10px;font-size:16.5px}
+.mclose{position:absolute;top:10px;right:14px;border:none;background:none;font-size:28px;color:var(--soft);cursor:pointer}
+@media (max-width:520px){body{font-size:17px}.card,.reply{padding:18px}.hero{padding-top:28px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="logo" id="home" aria-label="Quítale hierro, inicio">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M25 4C14 6 8 13 7 25l2 1c1-3 3-6 5-8-1 4-1 6 0 8 6-2 10-7 11-14l-4 2 4-5z" fill="#7d9a7e"/><path d="M7 25l-2 4" stroke="#7d9a7e" stroke-width="2" stroke-linecap="round"/></svg>
+      Quítale hierro
+    </a>
+    <a class="help-link" href="#ayuda" id="helpTop">¿Lo pasas muy mal? 024</a>
+  </header>
+
+  <section id="start">
+    <div class="hero">
+      <h1>Quítale <em>hierro</em>.</h1>
+      <p>Ese pensamiento que no te deja tranquilo, esa duda que lleva tiempo echando raíces… Cuéntalo aquí y dale otra vuelta, con calma.</p>
+    </div>
+
+    <div class="card">
+      <label class="big" for="msg">¿Qué te ronda la cabeza?</label>
+      <textarea id="msg" maxlength="2000" placeholder="Escribe con tus palabras, sin filtros. Por ejemplo: «Siempre pienso que en el trabajo creen que no valgo…»"></textarea>
+      <div class="count"><span id="cnt">0</span>/2000</div>
+      <div class="sub">¿Cómo te sientes ahora? <span style="text-transform:none;font-weight:400">(opcional)</span></div>
+      <div class="chips" id="moods"></div>
+      <div class="row">
+        <div class="privacy"><span>🔒</span><span>No pedimos datos ni guardamos lo que escribes. <a href="#" id="openPriv" style="color:inherit">Más info</a></span></div>
+        <button class="btn" id="send" disabled>Darle una vuelta</button>
+      </div>
+    </div>
+
+    <div class="examples">
+      <h2>¿No sabes por dónde empezar?</h2>
+      <div class="ex" id="examples"></div>
+    </div>
+
+    <div class="how">
+      <div><b>1. Lo cuentas</b><p>Con tus palabras. Nadie te juzga y nada se guarda.</p></div>
+      <div><b>2. Le das otra vuelta</b><p>Pones nombre a lo que sientes y detectas los pensamientos trampa.</p></div>
+      <div><b>3. Te llevas algo</b><p>Preguntas para pensar, un pequeño ejercicio y una frase para guardar.</p></div>
+    </div>
+  </section>
+
+  <section id="chat">
+    <div id="thread"></div>
+    <div class="follow" id="follow" style="display:none">
+      <label class="big" for="fmsg" style="font-size:18px">¿Quieres responder o añadir algo?</label>
+      <textarea id="fmsg" maxlength="1500" placeholder="Puedes contestar a alguna de las preguntas o contar cómo lo ves ahora…"></textarea>
+      <div class="row"><span class="left" id="left"></span><button class="btn" id="fsend" disabled>Enviar</button></div>
+    </div>
+    <div class="actions" id="actions" style="display:none">
+      <button class="btn ghost" id="copy">Copiar la reflexión</button>
+      <button class="btn" id="restart">Empezar de nuevo</button>
+    </div>
+    <p class="note" id="aiNote"></p>
+  </section>
+
+  <footer id="ayuda">
+    <p><b>Quítale hierro no es terapia ni sustituye a un profesional.</b> Es un espacio de reflexión, como un buen libro de autoayuda, con respuestas generadas por inteligencia artificial. Si lo que sientes dura semanas o te impide hacer tu vida con normalidad, habla con tu médico de cabecera o con un psicólogo.</p>
+    <p><b>Si lo estás pasando muy mal, no estás solo ni sola:</b></p>
+    <div class="phones">
+      <div><span class="tel">024</span> · Atención a la conducta suicida, gratis y 24 h</div>
+      <div><span class="tel">112</span> · Emergencias</div>
+      <div><span class="tel">016</span> · Violencia de género (no deja rastro en la factura)</div>
+      <div><span class="tel">900 20 20 10</span> · Fundación ANAR, para menores</div>
+    </div>
+    <p><a href="#" id="openPriv2" style="color:inherit">Privacidad</a> · Hecho con cariño en España.</p>
+  </footer>
+</div>
+
+<div class="modal" id="modal"><div class="mbox" id="mbox"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+"use strict";
+const $=id=>document.getElementById(id);
+const MOODS=["Agobio","Tristeza","Ansiedad","Enfado","Miedo","Culpa","Cansancio","Confusión","Soledad"];
+const EXAMPLES=[
+ "Me cuesta mucho decir que no y luego acabo agotado/a y enfadado/a conmigo.",
+ "Le doy mil vueltas a lo que piensan los demás de mí.",
+ "Siento que no soy suficiente en el trabajo, aunque nadie me lo haya dicho.",
+ "Me comparo todo el rato con otras personas y siempre salgo perdiendo.",
+ "Tengo miedo a equivocarme y por eso no me decido a cambiar nada.",
+ "Me siento culpable cuando dedico tiempo a mí."
+];
+const MAX_FOLLOW=3;
+const S={moods:new Set(),msgs:[],follows:0,busy:false,lastText:""};
+
+/* Indicios de crisis: muestra ayuda inmediata (además, la IA tiene instrucciones propias) */
+const CRISIS=/(suicid|quitarme la vida|matarme|me quiero morir|quiero morirme|no quiero (seguir )?vivir|no vale la pena vivir|acabar con todo|desaparecer para siempre|hacerme daño|autolesi|cortarme|me corto|hacerle daño a|matarle|matarla|me pega|me maltrata|maltrato|me viola|abus(a|o) de m|me amenaza)/i;
+
+/* ---------- utilidades ---------- */
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function toast(t){const e=$("toast");e.textContent=t;e.style.display="block";clearTimeout(toast.t);toast.t=setTimeout(()=>e.style.display="none",2200);}
+function inline(s){return s.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>").replace(/(^|[^*])\*(?!\s)(.+?)\*/g,"$1<em>$2</em>");}
+function md(t){
+  let out="",keep=false;
+  esc(t).split(/\n{2,}/).forEach(block=>{
+    const lines=block.trim().split("\n"); if(!lines[0]) return;
+    let i=0;
+    if(/^#{1,4}\s/.test(lines[0])){const h=lines[0].replace(/^#+\s*/,"");keep=/guardar/i.test(h);out+=`<h3>${inline(h)}</h3>`;i=1;}
+    const rest=lines.slice(i); if(!rest.length) return;
+    if(rest.every(l=>/^\s*([-*•]|\d+[.)])\s+/.test(l))){
+      const ord=/^\s*\d/.test(rest[0]);
+      out+=(ord?"<ol>":"<ul>")+rest.map(l=>`<li>${inline(l.replace(/^\s*([-*•]|\d+[.)])\s+/,""))}</li>`).join("")+(ord?"</ol>":"</ul>");
+    } else if(keep){ out+=`<div class="keep">${inline(rest.join(" ").replace(/^&gt;\s*/,""))}</div>`; }
+    else out+=`<p>${inline(rest.join("<br>"))}</p>`;
+  });
+  return out;
+}
+function crisisBox(){
+  return `<div class="crisis"><h3>Lo que cuentas es importante y no tienes que llevarlo solo ni sola.</h3>
+   <p>Si estás pensando en hacerte daño o estás en peligro, habla hoy mismo con alguien:</p>
+   <ul><li><span class="tel">024</span> Atención a la conducta suicida. Gratis, confidencial, 24 horas.</li>
+   <li><span class="tel">112</span> Si hay un peligro inmediato.</li>
+   <li><span class="tel">016</span> Si sufres violencia de género. No deja rastro en la factura.</li>
+   <li><span class="tel">900 20 20 10</span> Fundación ANAR, si eres menor de edad.</li></ul>
+   <p style="margin-top:8px">Y si puedes, cuéntaselo ahora a alguien de confianza.</p></div>`;
+}
+
+/* ---------- inicio ---------- */
+$("moods").innerHTML=MOODS.map(m=>`<button class="chip" data-m="${m}">${m}</button>`).join("");
+$("moods").querySelectorAll(".chip").forEach(b=>b.onclick=()=>{b.classList.toggle("on");S.moods.has(b.dataset.m)?S.moods.delete(b.dataset.m):S.moods.add(b.dataset.m);});
+$("examples").innerHTML=EXAMPLES.map(e=>`<button>${esc(e)}</button>`).join("");
+$("examples").querySelectorAll("button").forEach(b=>b.onclick=()=>{$("msg").value=b.textContent;upd();$("msg").focus();window.scrollTo({top:$("msg").getBoundingClientRect().top+scrollY-120,behavior:"smooth"});});
+function upd(){const v=$("msg").value;$("cnt").textContent=v.length;$("send").disabled=v.trim().length<10||S.busy;}
+$("msg").oninput=upd;
+$("fmsg").oninput=()=>{$("fsend").disabled=$("fmsg").value.trim().length<2||S.busy;};
+
+$("send").onclick=()=>{
+  const text=$("msg").value.trim(); if(text.length<10) return;
+  S.msgs=[{role:"user",content:text}]; S.follows=0;
+  $("start").style.display="none"; $("chat").style.display="block";
+  $("thread").innerHTML=""; window.scrollTo({top:0,behavior:"smooth"});
+  turn(text);
+};
+$("fsend").onclick=()=>{
+  const text=$("fmsg").value.trim(); if(!text) return;
+  S.follows++; S.msgs.push({role:"user",content:text}); $("fmsg").value=""; $("fsend").disabled=true;
+  turn(text);
+};
+
+/* ---------- IA ---------- */
+const INSTRUCCIONES=`Eres la voz de «Quítale hierro», un espacio web de reflexión al estilo de un buen libro de autoayuda: cercano, honesto, cálido y con un punto de humor amable cuando encaja. No eres terapeuta ni psicólogo y no lo finges: no diagnosticas, no pones etiquetas de trastornos y no hablas de medicación.
+
+Te apoyas en enfoques con respaldo: la reestructuración cognitiva (pensamientos trampa como el catastrofismo, el todo o nada, leer la mente, la generalización, la personalización, los «debería», ponerse etiquetas, el filtro negativo, descartar lo positivo o el razonamiento emocional), la aceptación y el compromiso (valores, aceptar las emociones, tomar distancia de los pensamientos), la autocompasión y algo de estoicismo (distinguir lo que depende de ti de lo que no).
+
+Primera respuesta. Usa estos encabezados con "## ":
+- "## Lo que te pasa": pon nombre a lo que siente y normalízalo sin quitarle importancia (es algo que le pasa a mucha gente). Nunca digas «no es para tanto».
+- "## La trampa": identifica uno o dos pensamientos trampa, con un nombre sencillo, usando sus propias palabras como ejemplo.
+- "## Dale una vuelta": tres preguntas concretas, en lista, para que se lo replantee.
+- "## Para esta semana": un ejercicio pequeño, concreto y realizable en 5-10 minutos.
+- "## Para guardar": una sola frase breve y original. No cites libros ni autores contemporáneos; como mucho, parafrasea ideas estoicas clásicas.
+Extensión: 350-500 palabras. Tutea y escribe en español de España. Sin emojis. Usa **negritas** con moderación. Si no sabes su género, usa formas neutras.
+
+Respuestas de seguimiento: conversacionales, de 120 a 250 palabras y sin la estructura completa. Responde a lo que dice, profundiza con una pregunta y, si encaja, ajusta el ejercicio. Si te indican que es la última respuesta, cierra con calidez, resume lo hablado en una frase y termina con "## Para guardar" y una frase.
+
+Seguridad, por encima de todo lo demás: si hay cualquier indicio de ideas de suicidio o de hacerse daño, de hacer daño a otra persona, de sufrir violencia o abusos, o de una crisis grave, abandona la estructura. Responde con calidez, toma en serio lo que cuenta, no lo minimices ni propongas ejercicios, y anímale a contactar hoy con el 024 (atención a la conducta suicida, gratuita y 24 horas), el 112 si hay peligro inmediato, el 016 si sufre violencia de género y, si es menor, el 900 20 20 10 (Fundación ANAR), y a contárselo a alguien de confianza.
+Si lo que cuenta parece prolongado o le afecta mucho en su día a día (sueño, comida, trabajo o relaciones durante semanas), sugiere con naturalidad hablar con su médico de cabecera o con un psicólogo, sin dramatizar.
+Si parece menor de edad, adapta el tono y anímale a hablarlo con un adulto de confianza.
+No te presentes como una persona ni inventes experiencias propias; si te preguntan, eres una herramienta de inteligencia artificial.
+Solo tratas asuntos personales y emocionales; si te piden otra cosa, redirige con amabilidad.`;
+
+let samplePromise=Promise.resolve(null);
+try{ if(window.claude&&typeof window.claude.use==="function") samplePromise=window.claude.use("sample").catch(()=>null); }catch(e){}
+
+function promptFor(last){
+  const moods=S.moods.size?`Cómo dice sentirse: ${[...S.moods].join(", ")}.\n`:"";
+  const conv=S.msgs.map(m=>(m.role==="user"?"PERSONA: ":"QUÍTALE HIERRO: ")+m.content).join("\n\n");
+  return `${INSTRUCCIONES}\n\n---\n\n${moods}${S.msgs.length>1?"Conversación hasta ahora:\n\n"+conv+"\n\n"+(last?"Es la última respuesta: cierra la conversación.":"Escribe la siguiente respuesta de QUÍTALE HIERRO."):"Lo que cuenta la persona:\n\n"+S.msgs[0].content+"\n\nEscribe la primera respuesta."}`;
+}
+async function ask(last,onText){
+  try{const sample=await samplePromise;
+    if(sample){const r=await sample(promptFor(last),{modelTier:"default",cache:false,onText:({text})=>{if(text&&text!=="Thinking...")onText(text);}});
+      if(r&&r.text) return r.text;}
+  }catch(e){console.warn(e);}
+  try{
+    const r=await fetch("/api/reflexion",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({mensajes:S.msgs,animo:[...S.moods],ultima:last})});
+    if(r.ok&&r.body&&(r.headers.get("content-type")||"").includes("text/plain")){
+      const rd=r.body.getReader(),dec=new TextDecoder();let t="";
+      while(true){const {done,value}=await rd.read();if(done)break;t+=dec.decode(value,{stream:true});onText(t);}
+      if(t.trim()) return t;
+    }
+  }catch(e){console.warn(e);}
+  return null;
+}
+const FALLBACK=`## Ahora mismo no puedo responderte como me gustaría
+El servicio que genera las reflexiones no está disponible en este momento. Mientras tanto, te dejo algo que sirve casi siempre:
+
+## Dale una vuelta
+- ¿Qué le dirías a un buen amigo si te contara exactamente esto mismo?
+- ¿Qué pruebas tienes de que ese pensamiento es cierto? ¿Y de que no lo es del todo?
+- Dentro de un año, ¿cuánto te importará esto, del 0 al 10?
+
+## Para esta semana
+Escribe el pensamiento que más te pesa en un papel. Debajo, escribe una versión más justa y amable de él, como si la escribiera alguien que te quiere. Léela cada noche.
+
+## Para guardar
+Lo que piensas no siempre es lo que pasa.`;
+
+async function turn(userText){
+  S.busy=true; $("follow").style.display="none"; $("actions").style.display="none"; $("aiNote").textContent="";
+  const th=$("thread");
+  th.insertAdjacentHTML("beforeend",`<div class="you">${esc(userText)}</div>`);
+  if(CRISIS.test(userText)) th.insertAdjacentHTML("beforeend",crisisBox());
+  const box=document.createElement("div"); box.className="reply";
+  box.innerHTML=`<div class="thinking"><span class="dots"><span></span><span></span><span></span></span> Dándole una vuelta…</div>`;
+  th.appendChild(box);
+  if(S.msgs.length>1) box.scrollIntoView({behavior:"smooth",block:"start"});
+  const last=S.follows>=MAX_FOLLOW;
+  let text=await ask(last,t=>{box.innerHTML=md(t)+'<span class="cursor"></span>';});
+  if(!text){ text=FALLBACK; $("aiNote").textContent="Inténtalo de nuevo en un rato."; }
+  box.innerHTML=md(text); S.lastText=text;
+  S.msgs.push({role:"assistant",content:text});
+  S.busy=false;
+  $("actions").style.display="flex";
+  if(!last && text!==FALLBACK){
+    $("follow").style.display="block";
+    const n=MAX_FOLLOW-S.follows;
+    $("left").textContent=`Puedes responder ${n} ${n===1?"vez":"veces"} más`;
+  }
+}
+
+/* ---------- acciones ---------- */
+$("copy").onclick=async()=>{
+  const txt=S.msgs.map(m=>(m.role==="user"?"Yo: ":"")+m.content.replace(/^#+\s*/gm,"").replace(/\*\*/g,"")).join("\n\n")+"\n\n— Quítale hierro";
+  try{await navigator.clipboard.writeText(txt);toast("Copiado");}catch(e){toast("No se ha podido copiar");}
+};
+function reset(){S.msgs=[];S.follows=0;$("msg").value="";upd();$("chat").style.display="none";$("start").style.display="block";window.scrollTo({top:0,behavior:"smooth"});}
+$("restart").onclick=reset;
+$("home").onclick=e=>{e.preventDefault();if(S.busy)return;reset();};
+function privacy(e){e.preventDefault();
+  $("mbox").innerHTML=`<button class="mclose" id="mclose">×</button><h3>Privacidad</h3>
+  <p>Quítale hierro <b>no pide registro ni datos personales</b>, no usa cookies de seguimiento y <b>no guarda lo que escribes</b>.</p>
+  <p>Para generar la reflexión, tu texto se envía a un servicio de inteligencia artificial (Anthropic) solo para producir la respuesta. Cuando cierras o recargas la página, la conversación desaparece.</p>
+  <p>Aun así, te recomendamos no escribir nombres completos, direcciones ni datos que permitan identificarte a ti o a otras personas.</p>`;
+  $("modal").classList.add("on");$("mclose").onclick=()=>$("modal").classList.remove("on");}
+$("openPriv").onclick=privacy;$("openPriv2").onclick=privacy;
+$("modal").onclick=e=>{if(e.target.id==="modal")$("modal").classList.remove("on");};
+$("helpTop").onclick=e=>{e.preventDefault();$("ayuda").scrollIntoView({behavior:"smooth"});};
+</script>
+</body>
+</html>
